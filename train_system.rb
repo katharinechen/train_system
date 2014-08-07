@@ -1,7 +1,11 @@
-
+require 'pg'
+require './lib/line'
+require './lib/station'
+require './lib/train'
+require './lib/rider'
+require './lib/operator'
 
 DB = PG.connect({:dbname => 'train_station'})
-
 
 def main_menu
 
@@ -29,7 +33,6 @@ def rider_menu
   ##view train_lines (to see where train stops)
   #view train_station (to which trains pass through)
 end
-
 
 main_menu
 
