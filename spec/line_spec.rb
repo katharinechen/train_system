@@ -44,23 +44,31 @@ describe :Line do
     end
   end
 
-  # describe :add_station do
-  #   it "it adds a station to the line" do
-  #     line = Line.new({'name' => 'Yellow Line'})
-  #     station = Station.new({'name' => 'Pioneer Square'})
-  #     line.add_station(station)
-  #     # binding.pry
-  #     expect(line.get_stations).to eq [station]
-  #   end
-  # end
+  describe :add_station do
+    it "it adds a station to the line" do
+      line = Line.new({'name' => 'Yellow Line'})
+      line.create_new
+      station = Station.new({'name' => 'Pioneer Square'})
+      station.create_new
+      line.add_station(station)
+      expect(line.get_station_names).to eq [station.name]
+    end
+  end
 
-  # describe :print_stations do
-  #   it "lists the stations that are part of the line" do
-  #     line = Line.new({'name' => 'Yellow Line'})
-  #     station = Station.new({'name' => 'Pioneer Square'})
-  #     station1 = Station.new({'name' => 'Rose Quarter'})
-  #     station2 = Station.new({'name' => 'Expo Center'})
-  #     expect(line.print_stations).to eq [station, station1, station2]
-  #   end
-  # end
+  describe :print_stations do
+    it "lists the stations that are part of the line" do
+      line = Line.new({'name' => 'Yellow Line'})
+      line.create_new
+      station = Station.new({'name' => 'Pioneer Square'})
+      station1 = Station.new({'name' => 'Rose Quarter'})
+      station2 = Station.new({'name' => 'Expo Center'})
+      station.create_new
+      station1.create_new
+      station2.create_new
+      line.add_station(station)
+      line.add_station(station1)
+      line.add_station(station2)
+      expect(line.get_station_names).to eq [station.name, station1.name, station2.name]
+    end
+  end
 end
