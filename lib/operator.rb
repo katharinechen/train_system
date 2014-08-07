@@ -1,0 +1,4 @@
+class Operator < Rider
+
+
+end

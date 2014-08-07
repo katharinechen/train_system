@@ -6,4 +6,6 @@ class Train
     @line_id = attributes[:line_id]
     @start_time = attributes[:start_time]
   end
+
+
 end
