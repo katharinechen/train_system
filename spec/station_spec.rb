@@ -23,7 +23,17 @@ describe 'Station' do
   describe :write_new do
     it 'saves a new station to the database' do
       station = Station.new({'name' => "Beaverton TC"})
-      station.write_new
+      station.create_new
+      expect(Station.all).to eq [station]
+    end
+  end
+
+  describe :edit do
+    it "will edit an exisiting station entry in the database" do
+      station = Station.new({'name' => "Willow Creek"})
+      station.create_new
+      station.edit("Kenton Station")
+      expect(station.name).to eq "Kenton Station"
       expect(Station.all).to eq [station]
     end
   end

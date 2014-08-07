@@ -9,13 +9,14 @@ class Station
     @id = attributes['id'].to_i
   end
 
-  def write_new
+  def create_new
     result = DB.exec("INSERT INTO station (name) VALUES ('#{name}') RETURNING id;")
     @id = result.first['id'].to_i
   end
 
-  def write_update
-    # updates an entry in a DB with this id & name
+  def edit(new_name)
+    @name = new_name
+    DB.exec("UPDATE station SET name = '#{new_name}' WHERE id = #{id};")
   end
 
   def self.all
@@ -29,3 +30,7 @@ class Station
     name == another_station.name && id == another_station.id
   end
 end
+
+
+##delete
+## edit
