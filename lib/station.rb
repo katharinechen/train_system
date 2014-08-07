@@ -8,5 +8,4 @@ class Station
     @name = attributes[:name]
   end
 
-
 end
