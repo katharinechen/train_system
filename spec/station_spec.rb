@@ -37,4 +37,24 @@ describe 'Station' do
       expect(Station.all).to eq [station]
     end
   end
+
+  describe :delete do
+    it "will edit an exisiting station with a specific name" do
+      station = Station.new({'name' => "Willow Creek"})
+      station1 = Station.new({'name' => "Kenton Station"})
+      station.create_new
+      station1.create_new
+      station.delete
+      expect(Station.all).to eq [station1]
+    end
+
+    it "will not mess with the database if an entry does not exist" do
+      station1 = Station.new({'name' => "Rockwood Station"})
+      station1.create_new
+      station2 = Station.new({'name' => "Expo Center"})
+      station2.delete
+      expect(Station.all).to eq [station1]
+    end
+  end
+
 end
