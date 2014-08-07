@@ -9,4 +9,10 @@ describe :Train do
     expect(Train.new({line_id: 1}).line_id).to eq 1
   end
 
+  it 'set the train\'s start time' do
+    expect(Train.new({line_id: 1, start_time: "13:00:00.00"}).start_time).to eq("13:00:00.00")
+  end
+
 end
+
+#4.85
