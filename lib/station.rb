@@ -2,7 +2,7 @@ require 'pg'
 
 class Station
 
-  attr_reader :name, :id
+  attr_reader :name, :id, :line_id
 
   def initialize(attributes)
     @name = attributes['name']
@@ -16,8 +16,18 @@ class Station
     stations
   end
 
+  def self.all_names_by_ids(station_id_array)
+    station_by_id_list = []
+    self.all.each do |station|
+      if station_id_array.include?(station.id)
+        station_by_id_list << station.name
+      end
+    end
+    station_by_id_list
+  end
+
   def ==(another_station)
-    name == another_station.name && id == another_station.id
+   name == another_station.name && id == another_station.id
   end
 
   def create_new
@@ -33,4 +43,10 @@ class Station
   def delete
     DB.exec("DELETE FROM station WHERE id = #{id};") unless id == nil
   end
+
+  # def add_line
+
+  # end
+
+
 end

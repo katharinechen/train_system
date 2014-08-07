@@ -25,4 +25,19 @@ class Line
   def edit(new_name)
     result = DB.exec("UPDATE line SET name = '#{new_name}' WHERE id = #{id};")
   end
+
+  def add_station(station_object)
+    DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (#{id}, #{station_object.id});") unless station_object.id == nil
+  end
+
+  # def get_station_names
+  #   results = DB.exec("SELECT * FROM line_station WHERE line_id = #{id};")
+  #   stations_id = []
+  #   results.each { |result| stations_id << result['station_id'] }
+
+  #   # build an array of Station objects where id = station_id
+
+
+  # end
 end
+

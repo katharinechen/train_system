@@ -20,6 +20,18 @@ describe 'Station' do
     end
   end
 
+  describe ".all_names_by_ids" do
+    it 'returns an array with the names of all the respective ids' do
+      station = Station.new({'name' => "Willow Creek"})
+      station1 = Station.new({'name' => "Kenton Station"})
+      station2 = Station.new({'name' => "Expo Center"})
+      station.create_new
+      station1.create_new
+      station2.create_new
+      expect(Station.all_names_by_ids([station.id, station2.id])).to eq [station.name, station2.name]
+    end
+  end
+
   describe :write_new do
     it 'saves a new station to the database' do
       station = Station.new({'name' => "Beaverton TC"})

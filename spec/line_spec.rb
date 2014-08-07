@@ -1,4 +1,5 @@
 require 'spec_helper'
+require 'pry'
 
 describe :Line do
 
@@ -18,11 +19,15 @@ describe :Line do
     end
 
     it 'returns all entries in the database as an array' do
-      # not yet implemented
+      line = Line.new({'name' => "Yellow Line"})
+      line1 = Line.new({'name' => "Green Line"})
+      line.create_new
+      line1.create_new
+      expect(Line.all).to eq [line, line1]
     end
   end
 
-  describe "create_new" do
+  describe :create_new do
     it 'adds an entry to the database' do
       line = Line.new({'name' => 'Green Line'})
       line.create_new
@@ -30,7 +35,7 @@ describe :Line do
     end
   end
 
-  describe "edit" do
+  describe :edit do
     it "updates an existing entry in the database" do
       line = Line.new({'name' => 'Yellow Line'})
       line.create_new
@@ -38,4 +43,24 @@ describe :Line do
       expect(Line.all[0].name).to eq 'Purple Line'
     end
   end
+
+  # describe :add_station do
+  #   it "it adds a station to the line" do
+  #     line = Line.new({'name' => 'Yellow Line'})
+  #     station = Station.new({'name' => 'Pioneer Square'})
+  #     line.add_station(station)
+  #     # binding.pry
+  #     expect(line.get_stations).to eq [station]
+  #   end
+  # end
+
+  # describe :print_stations do
+  #   it "lists the stations that are part of the line" do
+  #     line = Line.new({'name' => 'Yellow Line'})
+  #     station = Station.new({'name' => 'Pioneer Square'})
+  #     station1 = Station.new({'name' => 'Rose Quarter'})
+  #     station2 = Station.new({'name' => 'Expo Center'})
+  #     expect(line.print_stations).to eq [station, station1, station2]
+  #   end
+  # end
 end
