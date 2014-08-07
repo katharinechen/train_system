@@ -34,5 +34,3 @@ class Station
     DB.exec("DELETE FROM station WHERE id = #{id};") unless id == nil
   end
 end
-
-

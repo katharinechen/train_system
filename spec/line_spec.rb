@@ -2,11 +2,40 @@ require 'spec_helper'
 
 describe :Line do
 
-  it 'initializes an instance of the Line class' do
-    expect(Line.new({name: "Yellow"}))
+  describe :initialize do
+    it 'initializes an instance of the Line class' do
+      expect(Line.new({'name' => "Yellow Line"}))
+    end
+
+    it 'sets its name to the value passed in the hash' do
+      expect(Line.new({'name' => "Yellow Line"}).name).to eq "Yellow Line"
+    end
   end
 
-  it 'sets its name to the value passed in the hash' do
-    expect(Line.new({name: "Yellow"}).name).to eq "Yellow"
+  describe ".all" do
+    it 'returns no entries at first, given an empty database' do
+      expect(Line.all).to eq []
+    end
+
+    it 'returns all entries in the database as an array' do
+      # not yet implemented
+    end
+  end
+
+  describe "create_new" do
+    it 'adds an entry to the database' do
+      line = Line.new({'name' => 'Green Line'})
+      line.create_new
+      expect(Line.all[0]).to eq line
+    end
+  end
+
+  describe "edit" do
+    it "updates an existing entry in the database" do
+      line = Line.new({'name' => 'Yellow Line'})
+      line.create_new
+      line.edit('Purple Line')
+      expect(Line.all[0].name).to eq 'Purple Line'
+    end
   end
 end
