@@ -23,7 +23,11 @@ class Station
         station_by_id_list << station.name
       end
     end
-    puts station_by_id_list
+    station_by_id_list
+  end
+
+  def self.delete(name)
+    DB.exec("DELETE FROM station WHERE name = '#{name}';") unless name == nil
   end
 
   def ==(another_station)
@@ -39,9 +43,4 @@ class Station
     @name = new_name
     DB.exec("UPDATE station SET name = '#{new_name}' WHERE id = #{id};")
   end
-
-  def delete
-    DB.exec("DELETE FROM station WHERE id = #{id};") unless id == nil
-  end
-
 end

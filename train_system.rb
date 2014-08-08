@@ -60,7 +60,7 @@ def main_menu
   if status == "o"
     operator_menu
   elsif status == "r"
-    rider_menu
+    # rider_menu
   elsif status == "p"
     database_insert
     puts "You have successfully populated your database with Portland Metro Data."
@@ -72,57 +72,92 @@ def main_menu
 end
 
 def operator_menu
+  system 'clear'
   puts "Welcome Operator!"
+  puts "Would you like to work with trains, stations, or train lines??"
+  puts "Press 'T' for trains."
+  puts "Press 'S' for stations"
+  puts "Press 'L' for train lines."
+  answer = gets.chomp.downcase
+
+  if answer == "t"
+  elsif answer == "s"
+    station_menu
+  elsif answer == "l"
+  else
+    puts "Please enter a valid option."
+  end
+end
+
+def station_menu
+  system 'clear'
+  puts "Welcome Operator to the Station Menu!"
   puts "Press 'C' to create a new train station."
   puts "Press 'R' to view all of the train stations"
-  puts "Press 'U' to update the list of train station."
   puts "Press 'D' to delete a station."
   answer = gets.chomp.downcase
 
   if answer == "c"
-    line_station_list
+    station_list
+    create_new_station
+    station_list
+    return_to_station_menu
   elsif answer == "r"
-    line_station_list
-  elsif answer == "u"
-
+    station_list
+    return_to_station_menu
   elsif answer == "d"
-
+    station_list
+    delete_station
+    station_list
+    return_to_station_menu
+  else
+    puts "Please enter a valid option."
   end
   ## create, read, update, and destroy stations
   ## add/delete/show/edit lines
   ## reschedule/show trains
 end
 
-
-def rider_menu
-  ##view train_lines (to see where train stops)
-  #view train_station (to which trains pass through)
-end
-
-
-def line_station_list
+def station_list
   puts "Here is the current list of all the stations in Portland:"
+  station_names = []
+  station_object_array = Station.all
 
-  # station_names = []
-  # station_object_array = Station.all
-
-  # station_object_array.each do |station|
-  #   station_names << station.name
-  # end
-  # puts station_names
-
-  line_station = DB.exec("SELECT * FROM line_station;")
-  line_station.each do |results|
-
-    puts "#{results[line_id]}: #{results[station_id]}"
-    ##return name from id
-    binding.pry
+  station_object_array.each do |station|
+    station_names << station.name
   end
+  puts station_names
+end
 
-1:1
+def create_new_station
+  puts "Please enter the name of the station you want to create."
+  name = gets.chomp.capitalize
+  new_station = Station.new({'name' => "#{name}"})
+  new_station.create_new
+  puts " "
+  puts "You have successfully added #{name}."
+end
+
+def delete_station
+  puts "Please enter the name of the station you want to delete."
+  name = gets.chomp.capitalize
+  Station.delete(name)
+
+
+#delete from line_station as well
 
 end
 
+def return_to_station_menu
+  puts "Please 'm' to go back to the menu."
+  result = gets.chomp
+  if result == 'm'
+    station_menu
+  end
+end
 main_menu
 
-
+# def rider_menu
+#   ##view train_lines (to see where train stops)
+#   #view train_station (to which trains pass through)
+# end
