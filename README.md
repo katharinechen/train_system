@@ -17,24 +17,28 @@ After install Postgres, enter the following code to create the appropriate datab
 
   CREATE DATABASE train_station;
 
-  \c train_station;
+```sql
 
-  CREATE TABLE line (id serial PRIMARY KEY, name varchar);
+\c train_station;
 
-  CREATE TABLE station (id serial PRIMARY KEY, name varchar);
+CREATE TABLE line (id serial PRIMARY KEY, name varchar);
 
-  CREATE TABLE line_station (id serial PRIMARY KEY, line_id int, station_id);
+CREATE TABLE station (id serial PRIMARY KEY, name varchar);
 
-  CREATE TABLE train (id serial PRIMARY KEY, line_id int);
+CREATE TABLE line_station (id serial PRIMARY KEY, line_id int, station_id);
 
-  CREATE TABLE operator (id serial PRIMARY KEY, name varchar);
+CREATE TABLE train (id serial PRIMARY KEY, line_id int);
 
-  CREATE TABLE rider (id serial PRIMARY KEY, name varchar);
+CREATE TABLE operator (id serial PRIMARY KEY, name varchar);
+
+CREATE TABLE rider (id serial PRIMARY KEY, name varchar);
+```
 
 After creating the necessary tables in the train_station database, clone the database for testing.
 
-  CREATE DATABASE train_station_test WITH TEMPLATE train_station;
-
+```sql
+CREATE DATABASE train_station_test WITH TEMPLATE train_station;
+```
 To run the program, run train_system.rb after installing Ruby.
 
   ruby train_system.rb
