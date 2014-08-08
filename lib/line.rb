@@ -25,7 +25,11 @@ class Line
   end
 
   def edit(new_name)
-    result = DB.exec("UPDATE line SET name = '#{new_name}' WHERE id = #{id};")
+    result = DB.exec("UPDATE line SET name = '#{new_name}' WHERE id = #{id};") unless name == nil
+  end
+
+  def self.delete(name)
+    DB.exec("DELETE FROM line WHERE name = '#{name}';")
   end
 
   def add_station(station_object)
@@ -39,4 +43,3 @@ class Line
     Station.all_names_by_ids(stations_id)
   end
 end
-

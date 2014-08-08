@@ -75,15 +75,14 @@ def operator_menu
   system 'clear'
   puts "Welcome Operator!"
   puts "Would you like to work with trains, stations, or train lines??"
-  puts "Press 'T' for trains."
   puts "Press 'S' for stations"
   puts "Press 'L' for train lines."
   answer = gets.chomp.downcase
 
-  if answer == "t"
-  elsif answer == "s"
+  if answer == "s"
     station_menu
   elsif answer == "l"
+    line_menu
   else
     puts "Please enter a valid option."
   end
@@ -95,11 +94,17 @@ def station_menu
   puts "Press 'C' to create a new train station."
   puts "Press 'R' to view all of the train stations"
   puts "Press 'D' to delete a station."
+  puts "Press 'M' to return the the main menu."
   answer = gets.chomp.downcase
 
   if answer == "c"
     station_list
-    create_new_station
+    puts "Please enter the name of the station you want to create."
+    name = gets.chomp.capitalize
+    new_station = Station.new({'name' => "#{name}"})
+    new_station.create_new
+    puts " "
+    puts "You have successfully added #{name}."
     station_list
     return_to_station_menu
   elsif answer == "r"
@@ -107,55 +112,99 @@ def station_menu
     return_to_station_menu
   elsif answer == "d"
     station_list
-    delete_station
+    puts "Please enter the name of the station you want to delete."
+    name = gets.chomp.capitalize
+    Station.delete(name)
+    # DB.exec("DELETE FROM line_station WHERE station_id = '#{name}';")
     station_list
     return_to_station_menu
+  elsif answer == "m"
+    operator_menu
   else
     puts "Please enter a valid option."
+    sleep 1.0
+    station_menu
   end
-  ## create, read, update, and destroy stations
-  ## add/delete/show/edit lines
-  ## reschedule/show trains
 end
 
 def station_list
   puts "Here is the current list of all the stations in Portland:"
   station_names = []
   station_object_array = Station.all
-
   station_object_array.each do |station|
     station_names << station.name
   end
   puts station_names
 end
 
-def create_new_station
-  puts "Please enter the name of the station you want to create."
-  name = gets.chomp.capitalize
-  new_station = Station.new({'name' => "#{name}"})
-  new_station.create_new
-  puts " "
-  puts "You have successfully added #{name}."
-end
-
-def delete_station
-  puts "Please enter the name of the station you want to delete."
-  name = gets.chomp.capitalize
-  Station.delete(name)
-
-
-#delete from line_station as well
-
-end
-
 def return_to_station_menu
-  puts "Please 'm' to go back to the menu."
+  puts "Please press 'm' to go back to the menu."
   result = gets.chomp
   if result == 'm'
     station_menu
+  else
+    puts "Please enter a valid option."
   end
 end
+
+def line_menu
+  system 'clear'
+  puts "Welcome Operator to the Line Menu!"
+  puts "Press 'C' to create a new line."
+  puts "Press 'R' to view all of the train lines."
+  puts "Press 'D' to delete one of your lines."
+  answer = gets.chomp
+
+  if answer == "c"
+    line_list
+    puts "Please enter the name of line you want to create."
+    result = gets.chomp
+    new_line = Line.new({'name' => "#{result}"})
+    new_line.create_new
+    puts " "
+    puts "You have successfully added #{result}."
+    line_list
+    return_to_line_menu
+  elsif answer == "r"
+    line_list
+    return_to_line_menu
+  elsif answer == "d"
+    line_list
+    puts "Please enter the name of the line you want to delete."
+    name = gets.chomp.capitalize
+    Line.delete(name)
+    line_list
+    return_to_line_menu
+  else
+    puts "Invalid Response."
+  end
+end
+
+def line_list
+  puts "Here is the current list of all the lines in Portland:"
+  line_list = []
+  line_object_array = Line.all
+  line_object_array.each do |line|
+    line_list << line.name
+  end
+  puts line_list
+end
+
+def return_to_line_menu
+  puts "Please press 'm' to go back to the menu."
+  result = gets.chomp
+  if result == 'm'
+    line_menu
+  else
+    "Please enter a valid option."
+    sleep 1.0
+    line_menu
+  end
+end
+
 main_menu
+
+
 
 # def rider_menu
 #   ##view train_lines (to see where train stops)

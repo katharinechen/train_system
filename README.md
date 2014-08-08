@@ -39,3 +39,7 @@ ruby train_system.rb
 
 ## License
 MIT
+
+## Improvements
+
+Write a function to delete from the join table when one of the trains or lines are deleted
