@@ -23,7 +23,7 @@ class Station
         station_by_id_list << station.name
       end
     end
-    station_by_id_list
+    puts station_by_id_list
   end
 
   def ==(another_station)
@@ -43,10 +43,5 @@ class Station
   def delete
     DB.exec("DELETE FROM station WHERE id = #{id};") unless id == nil
   end
-
-  # def add_line
-
-  # end
-
 
 end
