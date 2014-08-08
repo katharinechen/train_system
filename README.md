@@ -13,24 +13,18 @@ Clone this repository in your terminal.
 
 After install Postgres, enter the following code to create the appropriate database and files.
 
-  psql
+```psql```
 
   CREATE DATABASE train_station;
 
 ```sql
 
 \c train_station;
-
 CREATE TABLE line (id serial PRIMARY KEY, name varchar);
-
 CREATE TABLE station (id serial PRIMARY KEY, name varchar);
-
 CREATE TABLE line_station (id serial PRIMARY KEY, line_id int, station_id);
-
 CREATE TABLE train (id serial PRIMARY KEY, line_id int);
-
 CREATE TABLE operator (id serial PRIMARY KEY, name varchar);
-
 CREATE TABLE rider (id serial PRIMARY KEY, name varchar);
 ```
 
@@ -41,5 +35,6 @@ CREATE DATABASE train_station_test WITH TEMPLATE train_station;
 ```
 To run the program, run train_system.rb after installing Ruby.
 
-  ruby train_system.rb
-
+```ruby
+ruby train_system.rb
+```
