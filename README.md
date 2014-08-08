@@ -14,14 +14,21 @@ Clone this repository in your terminal.
 After install Postgres, enter the following code to create the appropriate database and files.
 
   psql
+
   CREATE DATABASE train_station;
+
   \c train_station;
 
   CREATE TABLE line (id serial PRIMARY KEY, name varchar);
+
   CREATE TABLE station (id serial PRIMARY KEY, name varchar);
+
   CREATE TABLE line_station (id serial PRIMARY KEY, line_id int, station_id);
+
   CREATE TABLE train (id serial PRIMARY KEY, line_id int);
+
   CREATE TABLE operator (id serial PRIMARY KEY, name varchar);
+
   CREATE TABLE rider (id serial PRIMARY KEY, name varchar);
 
 After creating the necessary tables in the train_station database, clone the database for testing.
