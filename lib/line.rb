@@ -30,17 +30,6 @@ class Line
     DB.exec("DELETE FROM line WHERE name = '#{name}';")
   end
 
-  # def add_station(station_object)
-  #   DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (#{id}, #{station_object.id});") unless station_object.id == nil
-  # end
-
-  # def get_station_names
-  #   results = DB.exec("SELECT * FROM line_station WHERE line_id = #{id};")
-  #   stations_id = []
-  #   results.each { |result| stations_id << result['station_id'].to_i }
-  #   Station.all_names_by_ids(stations_id)
-  # end
-
   def ==(another_line)
     id == nil ? false : id == another_line.id
   end
