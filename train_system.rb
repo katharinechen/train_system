@@ -244,7 +244,6 @@ end
 
 def association_list
 
-  #could replace with the print_line function
   x = 1
   (Line.all.length).times do
     results = DB.exec( "
@@ -262,7 +261,6 @@ def association_list
     puts " "
     x = x + 1
   end
-
 end
 
 def return_to_association_menu
