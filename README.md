@@ -29,6 +29,7 @@ CREATE TABLE rider (id serial PRIMARY KEY, name varchar);
 After creating the necessary tables in the train_station database, clone the database for testing.
 
 ```sql
+\c epicodus;
 CREATE DATABASE train_station_test WITH TEMPLATE train_station;
 ```
 To run the program, run train_system.rb after installing Ruby.
@@ -39,7 +40,3 @@ ruby train_system.rb
 
 ## License
 MIT
-
-## Improvements
-
-Write a function to delete from the join table when one of the trains or lines are deleted

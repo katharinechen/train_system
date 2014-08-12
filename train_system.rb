@@ -8,121 +8,116 @@ require './lib/operator'
 
 DB = PG.connect({:dbname => 'train_station'})
 
+def database_insert
+  #database for table "Line"
+  DB.exec("INSERT INTO line (name) VALUES ('Yellow');")
+  DB.exec("INSERT INTO line (name) VALUES ('Green');")
+  DB.exec("INSERT INTO line (name) VALUES ('Red');")
+  DB.exec("INSERT INTO line (name) VALUES ('Blue');")
 
-  def database_insert
+  #data for table "Station"
+  DB.exec("INSERT INTO station (name) VALUES ('Gresham');")
+  DB.exec("INSERT INTO station (name) VALUES ('Gateway');")
+  DB.exec("INSERT INTO station (name) VALUES ('Airport');")
+  DB.exec("INSERT INTO station (name) VALUES ('Clackamas Town Center');")
+  DB.exec("INSERT INTO station (name) VALUES ('Expo Center');")
+  DB.exec("INSERT INTO station (name) VALUES ('Rose Quarter');")
+  DB.exec("INSERT INTO station (name) VALUES ('PSU');")
+  DB.exec("INSERT INTO station (name) VALUES ('Pioneer Square');")
+  DB.exec("INSERT INTO station (name) VALUES ('Beaverton');")
+  DB.exec("INSERT INTO station (name) VALUES ('Hillsboro');")
 
-    #database for table "Line"
-    DB.exec("INSERT INTO line (name) VALUES ('Yellow');")
-    DB.exec("INSERT INTO line (name) VALUES ('Green');")
-    DB.exec("INSERT INTO line (name) VALUES ('Red');")
-    DB.exec("INSERT INTO line (name) VALUES ('Blue');")
+  #database for table for "line_station"
+  DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (1, 5);")
+  DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (1, 8);")
+  DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (1, 7);")
+  DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (3, 3);")
+  DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (3, 2);")
+  DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (3, 6);")
+  DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (3, 9);")
+  DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (4, 1);")
+  DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (4, 9);")
+  DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (4, 10);")
+  DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (2, 4);")
+  DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (2, 6);")
+  DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (2, 7);")
+end
 
-    #data for table "Station"
-    DB.exec("INSERT INTO station (name) VALUES ('Gresham');")
-    DB.exec("INSERT INTO station (name) VALUES ('Gateway');")
-    DB.exec("INSERT INTO station (name) VALUES ('Airport');")
-    DB.exec("INSERT INTO station (name) VALUES ('Clackamas Town Center');")
-    DB.exec("INSERT INTO station (name) VALUES ('Expo Center');")
-    DB.exec("INSERT INTO station (name) VALUES ('Rose Quarter');")
-    DB.exec("INSERT INTO station (name) VALUES ('PSU');")
-    DB.exec("INSERT INTO station (name) VALUES ('Pioneer Square');")
-    DB.exec("INSERT INTO station (name) VALUES ('Beaverton');")
-    DB.exec("INSERT INTO station (name) VALUES ('Hillsboro');")
-
-    #database for table for "line_station"
-    DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (1, 5);")
-    DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (1, 8);")
-    DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (1, 7);")
-
-    DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (3, 3);")
-    DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (3, 2);")
-    DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (3, 6);")
-    DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (3, 9);")
-
-    DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (4, 1);")
-    DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (4, 9);")
-    DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (4, 10);")
-
-    DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (2, 4);")
-    DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (2, 6);")
-    DB.exec("INSERT INTO line_station (line_id, station_id) VALUES (2, 7);")
-  end
-
+def header
+  system 'clear'
+  puts"
+        ******************************
+        ***       Trains           ***
+        ******************************
+  "
+  puts ""
+end
 
 def main_menu
-  system 'clear'
-  puts "Welcome."
-  puts "Press 'O' if you are an operator."
-  puts "Press 'R' if you are a rider."
-  puts "Press 'P' to populate database with Portland Metro Date."
-  status = gets.chomp.downcase
+  header
+  puts "Press '1' if you are an operator."
+  puts "Press '2' to populate database with Portland Metro Date."
+  status = gets.chomp.to_i
 
-  if status == "o"
+  if status == 1
     operator_menu
-  elsif status == "r"
-    # rider_menu
-  elsif status == "p"
+  elsif status == 2
     database_insert
     puts "You have successfully populated your database with Portland Metro Data."
     sleep 2.0
     main_menu
   else
-    puts "Please enter a valid option."
+    invalid_option
+    main_menu
   end
 end
 
 def operator_menu
-  system 'clear'
-  puts "Welcome Operator!"
-  puts "Would you like to work with trains, stations, or train lines??"
-  puts "Press 'S' for stations"
-  puts "Press 'L' for train lines."
-  answer = gets.chomp.downcase
+  header
+  puts "What would you like to work with today?"
+  puts "Press '1' for stations"
+  puts "Press '2' for train lines."
+  puts "Press '3' for station-train associations."
+  answer = gets.chomp.to_i
 
-  if answer == "s"
+  if answer == 1
     station_menu
-  elsif answer == "l"
+  elsif answer == 2
     line_menu
+  elsif answer == 3
+    association_menu
   else
-    puts "Please enter a valid option."
+    invalid_option
+    operator_menu
   end
 end
 
 def station_menu
   system 'clear'
-  puts "Welcome Operator to the Station Menu!"
-  puts "Press 'C' to create a new train station."
-  puts "Press 'R' to view all of the train stations"
-  puts "Press 'D' to delete a station."
-  puts "Press 'M' to return the the main menu."
-  answer = gets.chomp.downcase
+  station_list
+  puts "Press '1' to create a new train station."
+  puts "Press '2' to delete a station."
+  puts "Press '3' to return the the main menu."
+  answer = gets.chomp.to_i
 
-  if answer == "c"
-    station_list
+  if answer == 1
     puts "Please enter the name of the station you want to create."
     name = gets.chomp.capitalize
     new_station = Station.new({'name' => "#{name}"})
-    new_station.create_new
+    new_station.save_new
     puts " "
     puts "You have successfully added #{name}."
-    station_list
     return_to_station_menu
-  elsif answer == "r"
-    station_list
-    return_to_station_menu
-  elsif answer == "d"
-    station_list
+  elsif answer == 2
     puts "Please enter the name of the station you want to delete."
     name = gets.chomp.capitalize
     Station.delete(name)
     # DB.exec("DELETE FROM line_station WHERE station_id = '#{name}';")
-    station_list
     return_to_station_menu
-  elsif answer == "m"
+  elsif answer == 3
     operator_menu
   else
-    puts "Please enter a valid option."
-    sleep 1.0
+    invalid_option
     station_menu
   end
 end
@@ -135,12 +130,13 @@ def station_list
     station_names << station.name
   end
   puts station_names
+  puts " "
 end
 
 def return_to_station_menu
-  puts "Please press 'm' to go back to the menu."
-  result = gets.chomp
-  if result == 'm'
+  puts "Please press '1' to go back to the menu."
+  result = gets.chomp.to_i
+  if result == 1
     station_menu
   else
     puts "Please enter a valid option."
@@ -149,34 +145,31 @@ end
 
 def line_menu
   system 'clear'
+  line_list
   puts "Welcome Operator to the Line Menu!"
-  puts "Press 'C' to create a new line."
-  puts "Press 'R' to view all of the train lines."
-  puts "Press 'D' to delete one of your lines."
-  answer = gets.chomp
+  puts "Press '1' to create a new line."
+  puts "Press '2' to delete one of your lines."
+  puts "Press '3' to return the the main menu."
+  answer = gets.chomp.to_i
 
-  if answer == "c"
-    line_list
+  if answer == 1
     puts "Please enter the name of line you want to create."
     result = gets.chomp
     new_line = Line.new({'name' => "#{result}"})
     new_line.create_new
     puts " "
     puts "You have successfully added #{result}."
-    line_list
     return_to_line_menu
-  elsif answer == "r"
-    line_list
-    return_to_line_menu
-  elsif answer == "d"
-    line_list
+  elsif answer == 2
     puts "Please enter the name of the line you want to delete."
     name = gets.chomp.capitalize
     Line.delete(name)
-    line_list
     return_to_line_menu
+  elsif answer == 3
+    line_menu
   else
-    puts "Invalid Response."
+    invalid_option
+    line_menu
   end
 end
 
@@ -188,12 +181,13 @@ def line_list
     line_list << line.name
   end
   puts line_list
+  puts " "
 end
 
 def return_to_line_menu
-  puts "Please press 'm' to go back to the menu."
-  result = gets.chomp
-  if result == 'm'
+  puts "Please press '1' to go back to the menu."
+  result = gets.chomp.to_i
+  if result == 1
     line_menu
   else
     "Please enter a valid option."
@@ -202,11 +196,9 @@ def return_to_line_menu
   end
 end
 
+def invalid_option
+  puts "Please enter a valid option."
+  sleep 1.0
+end
+
 main_menu
-
-
-
-# def rider_menu
-#   ##view train_lines (to see where train stops)
-#   #view train_station (to which trains pass through)
-# end
