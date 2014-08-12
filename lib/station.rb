@@ -1,5 +1,3 @@
-require 'pg'
-
 class Station
 
   attr_reader :name, :id, :line_id
@@ -34,13 +32,20 @@ class Station
    name == another_station.name && id == another_station.id
   end
 
-  # def self.all_names_by_ids(station_id_array)
-  #   station_by_id_list = []
-  #   self.all.each do |station|
-  #     if station_id_array.include?(station.id)
-  #       station_by_id_list << station.name
-  #     end
-  #   end
-  #   station_by_id_list
-  # end
+  def print_lines
+
+    lines_array = []
+    results = DB.exec( "
+      SELECT station.* FROM
+        line JOIN line_station ON (line.id = line_station.line_id)
+             JOIN station ON (line_station.station_id = station.id)
+        where line.id = #{@id};"
+      )
+
+    results.each do |object_hash|
+      lines_array << object_hash["name"]
+    end
+
+    lines_array
+  end
 end

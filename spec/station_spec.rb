@@ -48,23 +48,10 @@ describe 'Station' do
     end
   end
 
-  # describe ".all_names_by_ids" do
-  #   it 'returns an array with the names of all the respective ids' do
-  #     station = Station.new({'name' => "Willow Creek"})
-  #     station1 = Station.new({'name' => "Kenton Station"})
-  #     station2 = Station.new({'name' => "Expo Center"})
-  #     station.create_new
-  #     station1.create_new
-  #     station2.create_new
-  #     expect(Station.all_names_by_ids([station.id, station2.id])).to eq [station.name, station2.name]
-  #   end
-
-  #   it "will not mess with the database if an entry does not exist" do
-  #     station1 = Station.new({'name' => "Rockwood Station"})
-  #     station1.create_new
-  #     station2 = Station.new({'name' => "Expo Center"})
-  #     Station.delete(station2.name)
-  #     expect(Station.all).to eq [station1]
-  #   end
-  # end
+  describe :print_lines do
+    it "will print all of the stations that are associated with a line" do
+      create_examples
+      expect(@station1.print_lines).to eq [@station1.name, @station2.name, @station3.name, @station4.name]
+    end
+  end
 end

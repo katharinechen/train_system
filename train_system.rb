@@ -2,18 +2,15 @@ require 'pg'
 require 'pry'
 require './lib/line'
 require './lib/station'
-require './lib/train'
-require './lib/rider'
-require './lib/operator'
 
 DB = PG.connect({:dbname => 'train_station'})
 
 def database_insert
   #database for table "Line"
-  DB.exec("INSERT INTO line (name) VALUES ('Yellow');")
-  DB.exec("INSERT INTO line (name) VALUES ('Green');")
-  DB.exec("INSERT INTO line (name) VALUES ('Red');")
-  DB.exec("INSERT INTO line (name) VALUES ('Blue');")
+  DB.exec("INSERT INTO line (name) VALUES ('Yellow Line');")
+  DB.exec("INSERT INTO line (name) VALUES ('Green Line');")
+  DB.exec("INSERT INTO line (name) VALUES ('Red Line');")
+  DB.exec("INSERT INTO line (name) VALUES ('Blue Line');")
 
   #data for table "Station"
   DB.exec("INSERT INTO station (name) VALUES ('Gresham');")
@@ -112,7 +109,6 @@ def station_menu
     puts "Please enter the name of the station you want to delete."
     name = gets.chomp.capitalize
     Station.delete(name)
-    # DB.exec("DELETE FROM line_station WHERE station_id = '#{name}';")
     return_to_station_menu
   elsif answer == 3
     operator_menu
@@ -166,7 +162,7 @@ def line_menu
     Line.delete(name)
     return_to_line_menu
   elsif answer == 3
-    line_menu
+    main_menu
   else
     invalid_option
     line_menu
@@ -194,6 +190,52 @@ def return_to_line_menu
     sleep 1.0
     line_menu
   end
+end
+
+def association_menu
+  system 'clear'
+  association_list
+  puts "Welcome Operator to the Association Menu!"
+  puts "Press '1' to create a association."
+  puts "Press '2' to delete one of your association."
+  puts "Press '3' to return the the main menu."
+  answer = gets.chomp.to_i
+
+  if answer == 1
+
+  elsif answer == 2
+
+  elsif answer == 3
+    main_menu
+  else
+    invalid_option
+    association_menu
+  end
+
+end
+
+def association_list
+
+  #could replace with the print_line function
+  x = 1
+  (Line.all.length).times do
+    results = DB.exec( "
+      SELECT station.* FROM
+        line JOIN line_station ON (line.id = line_station.line_id)
+             JOIN station ON (line_station.station_id = station.id)
+        where line.id = #{x};"
+      )
+    line = DB.exec("SELECT * FROM line WHERE id = #{x};")
+    puts line[0]['name'] + ":"
+
+    results.each do |object_hash|
+      puts object_hash["name"]
+    end
+
+    puts " "
+    x = x + 1
+  end
+
 end
 
 def invalid_option

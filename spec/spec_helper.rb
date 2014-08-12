@@ -2,6 +2,7 @@ require 'rspec'
 require 'pg'
 require 'line'
 require 'station'
+require 'association'
 require 'pry'
 
 DB = PG.connect({:dbname => 'train_station_test'})
@@ -10,7 +11,6 @@ RSpec.configure do |config|
   config.after(:each) do
     DB.exec("TRUNCATE TABLE line RESTART IDENTITY;")
     DB.exec("TRUNCATE TABLE station RESTART IDENTITY;")
-    DB.exec("TRUNCATE TABLE train RESTART IDENTITY;")
     DB.exec("TRUNCATE TABLE line_station RESTART IDENTITY;")
   end
 end
@@ -32,4 +32,14 @@ def create_examples
   @line3.save_new
   @line4 = Line.new({"name" => "Silver Line"})
   @line4.save_new
+
+  DB.exec("INSERT INTO line_station(line_id, station_id) VALUES (1, 1);")
+  DB.exec("INSERT INTO line_station(line_id, station_id) VALUES (1, 2);")
+  DB.exec("INSERT INTO line_station(line_id, station_id) VALUES (1, 3);")
+  DB.exec("INSERT INTO line_station(line_id, station_id) VALUES (1, 4);")
+
+  @association1 = Association.new({'line_id' => 1, "station_id" => 1})
+  @association2 = Association.new({'line_id' => 1, "station_id" => 2})
+  @association3 = Association.new({'line_id' => 1, "station_id" => 3})
+  @association4 = Association.new({'line_id' => 1, "station_id" => 4})
 end

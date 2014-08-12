@@ -1,5 +1,3 @@
-require 'pry'
-
 class Line
 
   attr_reader :name, :id
