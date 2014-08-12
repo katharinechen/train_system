@@ -156,7 +156,7 @@ def line_menu
     puts "Please enter the name of line you want to create."
     result = gets.chomp
     new_line = Line.new({'name' => "#{result}"})
-    new_line.create_new
+    new_line.save_new
     puts " "
     puts "You have successfully added #{result}."
     return_to_line_menu

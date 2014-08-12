@@ -2,9 +2,6 @@ require 'rspec'
 require 'pg'
 require 'line'
 require 'station'
-require 'train'
-require 'rider'
-require 'operator'
 require 'pry'
 
 DB = PG.connect({:dbname => 'train_station_test'})
@@ -27,4 +24,12 @@ def create_examples
   @station3.save_new
   @station4 = Station.new({"name" => "Beaverton TC"})
   @station4.save_new
+  @line1 = Line.new({"name" => "Yellow Line"})
+  @line1.save_new
+  @line2 = Line.new({"name" => "Blue Line"})
+  @line2.save_new
+  @line3 = Line.new({"name" => "Purple Line"})
+  @line3.save_new
+  @line4 = Line.new({"name" => "Silver Line"})
+  @line4.save_new
 end

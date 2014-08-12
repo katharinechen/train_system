@@ -66,5 +66,5 @@ describe 'Station' do
   #     Station.delete(station2.name)
   #     expect(Station.all).to eq [station1]
   #   end
-  end
+  # end
 end
