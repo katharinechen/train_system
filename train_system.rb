@@ -2,6 +2,7 @@ require 'pg'
 require 'pry'
 require './lib/line'
 require './lib/station'
+require './lib/association'
 
 DB = PG.connect({:dbname => 'train_station'})
 
@@ -202,9 +203,36 @@ def association_menu
   answer = gets.chomp.to_i
 
   if answer == 1
+    puts "First, enter the name of the line."
+    line_name = gets.chomp
+    puts "Now, enter the name of the station."
+    station_name = gets.chomp
+
+    line_object = DB.exec("SELECT * FROM line WHERE name = '#{line_name}';")
+    station_object = DB.exec("SELECT * FROM station WHERE name = '#{station_name}';")
+
+    line_id = line_object[0]['id']
+    station_id = station_object[0]['id']
+
+    new_association = Association.new({'line_id' => "#{line_id}", 'station_id' => "#{station_id}"})
+    new_association.save_new
+    puts "You have successfully save the association!"
+    return_to_association_menu
 
   elsif answer == 2
+    puts "First, enter the name of the line."
+    line_name = gets.chomp
+    puts "Now, enter the name of the station."
+    station_name = gets.chomp
 
+    line_object = DB.exec("SELECT * FROM line WHERE name = '#{line_name}';")
+    station_object = DB.exec("SELECT * FROM station WHERE name = '#{station_name}';")
+
+    line_id = line_object[0]['id']
+    station_id = station_object[0]['id']
+    Association.delete(line_id, station_id)
+    puts "You have successfully deleted the association!"
+    return_to_association_menu
   elsif answer == 3
     main_menu
   else
@@ -231,11 +259,22 @@ def association_list
     results.each do |object_hash|
       puts object_hash["name"]
     end
-
     puts " "
     x = x + 1
   end
 
+end
+
+def return_to_association_menu
+  puts "Please press '1' to go back to the menu."
+  result = gets.chomp.to_i
+  if result == 1
+    association_menu
+  else
+    "Please enter a valid option."
+    sleep 1.0
+    association_menu
+  end
 end
 
 def invalid_option

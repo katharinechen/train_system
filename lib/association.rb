@@ -35,20 +35,13 @@ class Association
    name == another_association.name && id == another_association.id
   end
 
-  # def print_lines
-
-  #   lines_array = []
-  #   results = DB.exec( "
-  #     SELECT station.* FROM
-  #       line JOIN line_station ON (line.id = line_station.line_id)
-  #            JOIN station ON (line_station.station_id = station.id)
-  #       where line.id = #{@id};"
-  #     )
-
-  #   results.each do |object_hash|
-  #     lines_array << object_hash["name"]
-  #   end
-
-  #   lines_array
-  # end
 end
+
+
+# puts "Please enter the name of line you want to create."
+#     result = gets.chomp
+#     new_line = Line.new({'name' => "#{result}"})
+#     new_line.save_new
+#     puts " "
+#     puts "You have successfully added #{result}."
+#     return_to_line_menu
