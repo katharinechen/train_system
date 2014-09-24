@@ -239,11 +239,9 @@ def association_menu
     invalid_option
     association_menu
   end
-
 end
 
 def association_list
-
   x = 1
   (Line.all.length).times do
     results = DB.exec( "

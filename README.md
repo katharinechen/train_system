@@ -11,7 +11,7 @@ Clone the repository in your terminal.
 
 	https://github.com/katharinechen/train_system.git
 
-After install Postgres, enter the following code to create the appropriate database and files.
+After installing Postgres, enter the following code to create the appropriate database and files.
 
 ```sql
 

@@ -34,5 +34,4 @@ class Association
   def ==(another_association)
    name == another_association.name && id == another_association.id
   end
-
 end
